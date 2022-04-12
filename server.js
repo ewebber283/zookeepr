@@ -2,6 +2,12 @@ const express = require('express');
 const { animals } = require('./data/animals')
 const PORT = process.env.PORT || 3001;
 const app = express();
+const fs = require('fs')
+const path = require('path')
+
+//parse incoming string or array data
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
 
 filterbyQuery = (query, animalsArray) => {
     let personalityTraitsArray = [];
@@ -39,6 +45,35 @@ findById = (id, animalsArray) => {
 
     return result;
 }
+//accepts post route req.body
+createNewAnimal = (body, animalsArray) => {
+    const animal = body;
+
+    animalsArray.push(animal);
+
+    fs.writeFileSync(
+        path.join(__dirname, './data/animals.json'),
+        JSON.stringify({ animals: animalsArray }, null, 2)
+    );
+  return animal;
+}
+
+function validateAnimal(animal) {
+    if (!animal.name || typeof animal.name !== 'string') {
+      return false;
+    }
+    if (!animal.species || typeof animal.species !== 'string') {
+      return false;
+    }
+    if (!animal.diet || typeof animal.diet !== 'string') {
+      return false;
+    }
+    if (!animal.personalityTraits || !Array.isArray(animal.personalityTraits)) {
+      return false;
+    }
+    return true;
+  }
+
 app.get('/api/animals', (req, res) => {
     let results = animals;
 
@@ -56,6 +91,17 @@ app.get('/api/animals/:id', (req,res) => {
         res.send(404);
     }
 })
+
+app.post('/api/animals', (req, res) => {
+    req.body.id = animals.length.toString();
+
+    if(!validateAnimal(req.body)) {
+        res.status(400).send('This animal is not properly formatted')
+    } else {
+        const animal = createNewAnimal(req.body, animals)
+        res.json(animal)
+    }
+}) 
 
 app.listen(PORT, () => {
     console.log(`API now on port ${PORT}!`);
