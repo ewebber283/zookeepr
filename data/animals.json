@@ -108,6 +108,24 @@
         "hungry"
       ],
       "id": "10"
+    },
+    {
+      "name": "Ape",
+      "species": "Gorilla",
+      "diet": "folivore",
+      "personalityTraits": [
+        "loving"
+      ],
+      "id": "11"
+    },
+    {
+      "name": "Ape",
+      "species": "Tiger",
+      "diet": "folivore",
+      "personalityTraits": [
+        "zany"
+      ],
+      "id": "12"
     }
   ]
 }
