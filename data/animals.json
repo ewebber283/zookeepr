@@ -126,6 +126,24 @@
         "zany"
       ],
       "id": "12"
+    },
+    {
+      "name": "Mike",
+      "species": "Gorilla",
+      "diet": "folivore",
+      "personalityTraits": [
+        "anxious"
+      ],
+      "id": "13"
+    },
+    {
+      "name": "Mike",
+      "species": "Gorilla",
+      "diet": "herbivore",
+      "personalityTraits": [
+        "hungry"
+      ],
+      "id": "14"
     }
   ]
 }
